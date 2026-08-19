@@ -1,0 +1,269 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
+
+:root {
+  --brand-300: #6EA8FF;
+  --brand-500: #0366FF;
+  --brand-600: #0446B3;
+  --surface-50: #F2F2F3;
+  --surface-200: #D4D7D9;
+  --ink-400: #9EA4AE;
+
+  --brand-light: #6EA8FF;
+  --brand-base: #0366FF;
+  --brand-dark: #0446B3;
+}
+
+#ig-ctrl-bar {
+  position: fixed; 
+  transform: translateX(-50%); 
+  box-sizing: border-box;
+  background: rgba(18, 18, 20, 0.75) !important;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4), 0 2px 4px rgba(0, 0, 0, 0.2);
+  z-index: 999999;
+  font-family: 'Inter', sans-serif;
+  transition: opacity 350ms ease, transform 350ms cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+#ig-ctrl-bar.ig-ctrl-wide {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 10px 16px;
+  border-radius: 9999px;
+  width: max-content;
+}
+
+#ig-ctrl-bar.ig-ctrl-wide #ig-ctrl-seek {
+  flex: 1;
+  min-width: 120px;
+}
+
+/* JITTER FIX: 
+  The Pro button now spans columns 3 and 4, allowing the 1fr column 
+  to absorb the expansion natively without shrinking the Seek Bar. 
+*/
+#ig-ctrl-bar.ig-ctrl-narrow {
+  display: grid;
+  grid-template-columns: auto auto 1fr auto; 
+  grid-template-rows: auto auto;
+  gap: 6px 8px; 
+  padding: 8px 12px;
+  border-radius: 18px;
+  align-items: center;
+}
+
+#ig-ctrl-bar.ig-ctrl-narrow #ig-ctrl-seek { grid-row: 1; grid-column: 1 / span 3; width: 100% !important; min-width: unset !important; }
+#ig-ctrl-bar.ig-ctrl-narrow #ig-ctrl-time { grid-row: 1; grid-column: 4; font-size: 10px !important; min-width: unset !important; text-align: right; }
+#ig-ctrl-bar.ig-ctrl-narrow #ig-ctrl-play { grid-row: 2; grid-column: 1; }
+#ig-ctrl-bar.ig-ctrl-narrow .ig-ctrl-vol-container { grid-row: 2; grid-column: 2; }
+#ig-ctrl-bar.ig-ctrl-narrow #ig-ctrl-pro-btn { grid-row: 2; grid-column: 3 / span 2; justify-self: end; }
+
+#ig-ctrl-bar.ig-ctrl-narrow .ig-ctrl-btn { width: 30px; height: 30px; }
+#ig-ctrl-bar.ig-ctrl-narrow .ig-ctrl-icon { width: 17px; height: 17px; }
+
+.ig-ctrl-hidden { opacity: 0; pointer-events: none; transform: translateX(-50%) translateY(12px) !important; }
+.ig-ctrl-visible { opacity: 1; pointer-events: auto; transform: translateX(-50%) translateY(0) !important; }
+
+.ig-ctrl-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent !important;
+  border: none !important;
+  color: #FFFFFF !important; 
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  cursor: pointer;
+  outline: none;
+  flex-shrink: 0;
+  transition: all 200ms ease;
+}
+
+.ig-ctrl-btn:hover { color: var(--brand-300) !important; background: rgba(255, 255, 255, 0.1) !important; }
+.ig-ctrl-btn:active { transform: scale(0.92); }
+
+.ig-ctrl-btn:focus-visible,
+#ig-ctrl-seek:focus-visible,
+#ig-ctrl-vol-slider:focus-visible,
+.ig-ctrl-pro-wrapper:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(18, 18, 20, 0.8), 0 0 0 4px rgba(110, 168, 255, 0.8);
+}
+
+.ig-ctrl-icon { width: 18px; height: 18px; fill: currentColor !important; }
+
+/* --------------------------------------
+   Expandable Pro Upsell Pill (Liquid Design)
+--------------------------------------- */
+.ig-ctrl-pro-wrapper {
+  display: flex;
+  align-items: center;
+  /* Base State: Glossy Blue */
+  background: radial-gradient(circle at 32% 28%, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0.2) 25%, rgba(255,255,255,0) 45%), radial-gradient(circle at 65% 75%, rgba(4, 70, 179, 0.6) 0%, rgba(4, 70, 179, 0) 55%), linear-gradient(160deg, var(--brand-light) 0%, var(--brand-base) 45%, var(--brand-dark) 100%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  border-radius: 9999px !important;
+  cursor: pointer;
+  height: 28px !important;
+  padding: 0;
+  outline: none;
+  overflow: hidden;
+  box-shadow: 0 2px 5px rgba(4, 70, 179, 0.4), 0 1px 1px rgba(0, 0, 0, 0.15) !important;
+  transition: all 400ms cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
+}
+
+.ig-ctrl-pro-wrapper:hover {
+  /* Hover State: Glossy Pearl */
+  background: radial-gradient(circle at 32% 26%, rgba(255,255,255,1) 0%, rgba(255,255,255,0.8) 18%, rgba(255,255,255,0) 42%), radial-gradient(circle at 68% 78%, rgba(110, 168, 255, 0.3) 0%, rgba(110, 168, 255, 0) 55%), linear-gradient(160deg, #ffffff 0%, #F0F6FF 50%, #D4E5FF 100%) !important;
+  border-color: #FFFFFF !important;
+  box-shadow: 0 2px 5px rgba(3, 102, 255, 0.25), 0 1px 1px rgba(0,0,0,0.1) !important;
+}
+
+.ig-ctrl-pro-label {
+  color: #FFFFFF !important;
+  font-size: 10px !important;
+  font-weight: 700 !important;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 0 12px;
+  white-space: nowrap;
+  transition: color 300ms ease;
+}
+
+/* Switch label text to dark blue when background turns pearl */
+.ig-ctrl-pro-wrapper:hover .ig-ctrl-pro-label {
+  color: var(--brand-600) !important;
+}
+
+/* Hidden Feature Mocks Container */
+.ig-ctrl-pro-features {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  max-width: 0;
+  opacity: 0;
+  padding-right: 0;
+  pointer-events: none;
+  transition: all 400ms cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
+}
+
+.ig-ctrl-pro-wrapper:hover .ig-ctrl-pro-features {
+  max-width: 120px;
+  opacity: 1;
+  padding-right: 12px;
+}
+
+/* Mock Mini Liquid Switch */
+.ig-ctrl-mock-switch-track {
+  width: 22px;
+  height: 12px;
+  background-color: var(--brand-500) !important;
+  border: 1px solid var(--brand-500) !important;
+  border-radius: 9999px;
+  position: relative;
+  flex-shrink: 0;
+}
+
+.ig-ctrl-mock-switch-thumb {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  left: 10px; /* Simulated ON position */
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 32% 26%, rgba(255,255,255,1) 0%, rgba(255,255,255,0.8) 18%, rgba(255,255,255,0) 42%), radial-gradient(circle at 68% 78%, rgba(110, 168, 255, 0.3) 0%, rgba(110, 168, 255, 0) 55%), linear-gradient(160deg, #ffffff 0%, #F0F6FF 50%, #D4E5FF 100%) !important;
+  box-shadow: 0 1px 2px rgba(3, 102, 255, 0.25);
+}
+
+/* Mock Icons and Text */
+.ig-ctrl-mock-icon {
+  width: 14px;
+  height: 14px;
+  color: rgba(255, 255, 255, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 300ms ease;
+}
+
+.ig-ctrl-mock-icon svg { width: 14px; height: 14px; }
+
+.ig-ctrl-mock-text {
+  font-size: 11px !important;
+  font-weight: 700 !important;
+  color: rgba(255, 255, 255, 0.8) !important;
+  font-variant-numeric: tabular-nums;
+  font-family: 'Inter', sans-serif;
+  transition: color 300ms ease;
+}
+
+/* Switch mock colors to dark blue when background turns pearl */
+.ig-ctrl-pro-wrapper:hover .ig-ctrl-mock-icon {
+  color: var(--brand-600) !important;
+}
+.ig-ctrl-pro-wrapper:hover .ig-ctrl-mock-text {
+  color: var(--brand-600) !important;
+}
+
+@keyframes ls-squish-anim {
+  0%   { transform: translateY(-50%) scale(1, 1); }
+  35%  { transform: translateY(-50%) scale(1.28, 0.78); }
+  62%  { transform: translateY(-50%) scale(0.9, 1.1); }
+  82%  { transform: translateY(-50%) scale(1.05, 0.96); }
+  100% { transform: translateY(-50%) scale(1, 1); }
+}
+
+/* --------------------------------------
+   Detached Vertical Volume Popover 
+--------------------------------------- */
+.ig-ctrl-vol-container { position: relative; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.ig-ctrl-vol-popup {
+  position: absolute; bottom: calc(100% + 14px); left: 50%;
+  transform: translateX(-50%) translateY(10px) scale(0.95); transform-origin: bottom center;
+  background: rgba(24, 24, 27, 0.85) !important; backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.1) !important; box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4); border-radius: 24px;
+  width: 36px; height: 110px; display: flex; align-items: center; justify-content: center;
+  opacity: 0; visibility: hidden; pointer-events: none; transition: all 300ms cubic-bezier(0.65, 0, 0.35, 1);
+}
+.ig-ctrl-vol-popup::after { content: ''; position: absolute; top: 100%; left: -20px; right: -20px; height: 24px; background: transparent; }
+.ig-ctrl-vol-container:hover .ig-ctrl-vol-popup, .ig-ctrl-vol-popup:hover {
+  opacity: 1; visibility: visible; pointer-events: auto; transform: translateX(-50%) translateY(0) scale(1);
+}
+#ig-ctrl-vol-slider {
+  -webkit-appearance: none; appearance: none; width: 84px; height: 4px;
+  background: rgba(255, 255, 255, 0.2) !important; border-radius: 9999px; outline: none; cursor: pointer;
+  box-shadow: inset 0 1px 3px rgba(0,0,0,0.3); transform: rotate(-90deg); transform-origin: center; margin: 0 !important;
+}
+#ig-ctrl-vol-slider:hover { background: rgba(255, 255, 255, 0.3) !important; }
+#ig-ctrl-vol-slider::-webkit-slider-thumb {
+  -webkit-appearance: none; appearance: none; width: 14px; height: 14px; border-radius: 50%; border: none; cursor: grab; margin-top: -5px;
+  background: radial-gradient(circle at 32% 28%, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0.2) 25%, rgba(255,255,255,0) 45%), radial-gradient(circle at 65% 75%, rgba(4, 70, 179, 0.6) 0%, rgba(4, 70, 179, 0) 55%), linear-gradient(160deg, var(--brand-light) 0%, var(--brand-base) 45%, var(--brand-dark) 100%) !important;
+  box-shadow: 0 2px 5px rgba(4, 70, 179, 0.4), 0 1px 1px rgba(0, 0, 0, 0.5) !important;
+  transition: transform 150ms cubic-bezier(0.65, 0, 0.35, 1), background 380ms ease, box-shadow 380ms ease;
+}
+#ig-ctrl-vol-slider:active::-webkit-slider-thumb { cursor: grabbing; animation: ls-squish-anim 480ms cubic-bezier(0.65, 0, 0.35, 1); }
+
+/* --------------------------------------
+   Timeline/Seek Slider 
+--------------------------------------- */
+#ig-ctrl-seek {
+  -webkit-appearance: none; appearance: none; height: 5px; background: rgba(255, 255, 255, 0.2) !important;
+  border-radius: 9999px; outline: none; cursor: pointer; box-shadow: inset 0 1px 3px rgba(0,0,0,0.3); margin: 0 !important;
+  transition: background-color 380ms cubic-bezier(0.65, 0, 0.35, 1), box-shadow 380ms ease;
+}
+#ig-ctrl-seek:hover { background: rgba(255, 255, 255, 0.3) !important; }
+#ig-ctrl-seek::-webkit-slider-thumb {
+  -webkit-appearance: none; appearance: none; width: 14px; height: 14px; border-radius: 50%; border: none; cursor: grab; margin-top: -4.5px;
+  background: radial-gradient(circle at 32% 28%, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0.2) 25%, rgba(255,255,255,0) 45%), radial-gradient(circle at 65% 75%, rgba(4, 70, 179, 0.6) 0%, rgba(4, 70, 179, 0) 55%), linear-gradient(160deg, var(--brand-light) 0%, var(--brand-base) 45%, var(--brand-dark) 100%) !important;
+  box-shadow: 0 2px 5px rgba(4, 70, 179, 0.4), 0 1px 1px rgba(0, 0, 0, 0.5) !important; 
+  transition: transform 150ms cubic-bezier(0.65, 0, 0.35, 1), background 380ms ease, box-shadow 380ms ease;
+}
+#ig-ctrl-seek:active::-webkit-slider-thumb { cursor: grabbing; animation: ls-squish-anim 480ms cubic-bezier(0.65, 0, 0.35, 1); }
+#ig-ctrl-seek::-webkit-slider-runnable-track { width: 100%; height: 5px; cursor: pointer; border-radius: 9999px; border: none; }
+
+.ig-ctrl-time-text { color: #FFFFFF !important; font-size: 11px !important; font-weight: 600 !important; font-variant-numeric: tabular-nums; letter-spacing: -0.02em; white-space: nowrap; flex-shrink: 0; user-select: none; margin: 0 !important; opacity: 0.95; }
