@@ -1,0 +1,45 @@
+{
+  "manifest_version": 3,
+  "name": "Tabsy",
+  "version": "1.2.0",
+  "description": "Organize your tools into groups. One click opens everything — or launch a full tab group in seconds.",
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "Tabsy",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "32": "icons/icon32.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "permissions": [
+    "storage", 
+    "tabs", 
+    "tabGroups"
+  ],
+  "host_permissions": [
+    "https://www.google.com/s2/favicons*",
+    "<all_urls>"
+  ],
+  "omnibox": {
+    "keyword": "ts"
+  },
+  "commands": {
+    "_execute_action": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+Y",
+        "mac": "Command+Shift+Y"
+      },
+      "description": "Open Tabsy"
+    }
+  },
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  }
+}

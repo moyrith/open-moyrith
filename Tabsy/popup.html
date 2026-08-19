@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tabsy</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div id="app">
+
+    <!-- ═══ HOME VIEW ═══ -->
+    <div id="view-home" class="view active">
+      <header class="header">
+        <div class="header-brand">
+          <span class="brand-icon-wrap">
+            <img class="brand-icon" src="icons/icon48.png" alt="Tabsy">
+          </span>
+          <span class="brand-name">Tabsy</span>
+        </div>
+        <div class="header-actions">
+          
+          <!-- UPSELL BUTTON -->
+          <a href="https://payhip.com/b/GqdiY" target="_blank" rel="noopener noreferrer" class="pro-upsell-btn" title="Get Lifetime Access">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+              <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+            </svg>
+            Unlock Pro
+          </a>
+
+          <button class="add-btn" id="btn-add-group" title="New Group">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+              <line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>
+            </svg>
+            New Group
+          </button>
+          
+          <button class="settings-btn" id="btn-settings" title="Settings">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="3"/>
+              <path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/>
+            </svg>
+          </button>
+        </div>
+      </header>
+
+      <div class="scroll-area">
+        <div class="groups-grid" id="groups-grid"></div>
+        <div class="empty-state" id="home-empty">
+          <div class="empty-icon">📂</div>
+          <p class="empty-title">No groups yet</p>
+          <p class="empty-sub">Hit <strong>New Group</strong> to get started.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ GROUP VIEW ═══ -->
+    <div id="view-group" class="view">
+      <header class="header">
+        <button class="back-btn" id="btn-back">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="15 18 9 12 15 6"/>
+          </svg>
+        </button>
+        <div class="group-header-title-wrap" id="group-title-wrap"></div>
+        <div class="header-actions">
+          <button class="add-btn compact" id="btn-capture-tabs" title="Capture open tabs">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 5v14M5 12h14"/>
+              <rect x="2" y="3" width="20" height="14" rx="2" ry="2"/>
+              <path d="M8 21h8M12 17v4"/>
+            </svg>
+            Capture
+          </button>
+          <button class="add-btn compact" id="btn-add-tool">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+              <line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>
+            </svg>
+            Add
+          </button>
+        </div>
+      </header>
+
+      <div class="scroll-area">
+        <!-- Group Notes -->
+        <div class="group-notes" id="group-notes">
+          <div class="notes-toggle" id="notes-toggle">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/>
+              <polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/>
+              <line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/>
+            </svg>
+            <span id="notes-toggle-label">Notes</span>
+            <svg class="notes-chevron" id="notes-chevron" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </div>
+          <div class="notes-body" id="notes-body" style="display:none">
+            <textarea class="notes-textarea" id="notes-textarea" placeholder="Add notes, todos, or context for this group…" maxlength="2000" spellcheck="true"></textarea>
+            <div class="notes-footer">
+              <span class="notes-charcount" id="notes-charcount">0 / 2000</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="tools-list" id="tools-list"></div>
+        <div class="empty-state" id="group-empty">
+          <div class="empty-icon">🔗</div>
+          <p class="empty-title">No tools yet</p>
+          <p class="empty-sub">Hit <strong>Add</strong> to paste a link, or <strong>Capture</strong> to snapshot your open tabs</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ MODAL: ADD / EDIT GROUP ═══ -->
+    <div id="modal-group" class="modal-overlay" style="display:none">
+      <div class="modal">
+        <div class="modal-header">
+          <h2 class="modal-title" id="modal-group-title">New Group</h2>
+          <button class="modal-close" id="btn-cancel-group">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+              <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+            </svg>
+          </button>
+        </div>
+
+        <label class="input-label">Icon</label>
+        <div class="emoji-picker-wrap" id="emoji-picker-wrap">
+          <button class="emoji-picker-trigger" id="emoji-picker-trigger" type="button" title="Choose icon">
+            <span class="emoji-picker-preview" id="emoji-picker-preview">🚀</span>
+            <span class="emoji-picker-label">Choose icon</span>
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="emoji-dropdown" id="emoji-dropdown" style="display:none">
+            <div class="emoji-dd-search-wrap">
+              <svg class="emoji-dd-search-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+              <input class="emoji-dd-search" id="emoji-dd-search" type="text" placeholder="Search emojis…" autocomplete="off" spellcheck="false">
+            </div>
+            <div class="emoji-dd-categories" id="emoji-dd-categories"></div>
+            <div class="emoji-dd-grid" id="emoji-dd-grid"></div>
+            <div class="emoji-dd-empty" id="emoji-dd-empty" style="display:none">No emojis found</div>
+          </div>
+        </div>
+
+        <label class="input-label">Name</label>
+        <input type="text" id="group-name-input" placeholder="e.g. Design Tools"
+               class="input" maxlength="32" autocomplete="off">
+
+        <label class="input-label">Color</label>
+        <div class="color-picker" id="color-picker">
+          <div class="color-custom-wrap" title="Custom color">
+            <button class="color-custom-btn" id="color-custom-btn" type="button"></button>
+            <input type="color" class="color-custom-input" id="color-custom-input"
+                   value="#141414" tabindex="-1">
+          </div>
+        </div>
+
+        <div class="modal-actions">
+          <button class="btn-ghost" id="btn-cancel-group-2">Cancel</button>
+          <button class="btn-primary" id="btn-save-group">Create Group</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ MODAL: ADD / EDIT TOOL ═══ -->
+    <div id="modal-tool" class="modal-overlay" style="display:none">
+      <div class="modal">
+        <div class="modal-header">
+          <h2 class="modal-title" id="modal-tool-title">Add Tool</h2>
+          <button class="modal-close" id="btn-cancel-tool">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+              <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+            </svg>
+          </button>
+        </div>
+
+        <label class="input-label">URL</label>
+        <div class="url-input-row">
+          <input type="url" id="tool-url-input" placeholder="Paste a URL and hit Add…"
+                 class="input input--url" autocomplete="off" spellcheck="false">
+          <div class="fetch-indicator" id="fetch-indicator" aria-hidden="true"></div>
+        </div>
+
+        <div id="tool-edit-fields" style="display:none">
+          <label class="input-label">Name</label>
+          <input type="text" id="tool-name-input" placeholder="e.g. Figma"
+                 class="input" maxlength="40" autocomplete="off">
+
+          <label class="input-label">
+            Short Description
+            <span class="label-optional">optional</span>
+          </label>
+          <input type="text" id="tool-desc-input" placeholder="e.g. UI design & prototyping"
+                 class="input" maxlength="60" autocomplete="off">
+        </div>
+
+        <div class="modal-actions">
+          <button class="btn-ghost" id="btn-cancel-tool-2">Cancel</button>
+          <button class="btn-primary" id="btn-save-tool">Add Tool</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ COMMAND PALETTE ═══ -->
+    <div id="cmd-palette" class="cmd-palette" style="display:none">
+      <div class="cmd-palette-inner">
+        <div class="cmd-search-wrap">
+          <svg class="cmd-search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+            <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+          </svg>
+          <input class="cmd-search" id="cmd-search" type="text" placeholder="Search groups & tools…" autocomplete="off" spellcheck="false">
+          <span class="cmd-shortcut">Esc</span>
+        </div>
+        <div class="cmd-results" id="cmd-results"></div>
+        <div class="cmd-empty" id="cmd-empty" style="display:none">No results found</div>
+        <div class="cmd-footer">
+          <span class="cmd-hint"><kbd>↑↓</kbd> navigate</span>
+          <span class="cmd-hint"><kbd>↵</kbd> open</span>
+          <span class="cmd-hint"><kbd>⇧↵</kbd> open all</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ SETTINGS OVERLAY ═══ -->
+    <div id="settings-overlay" class="settings-overlay" style="display:none">
+      <div class="settings-panel">
+        <div class="settings-header">
+          <span class="settings-title">Settings</span>
+          <button class="settings-close" id="btn-close-settings">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+              <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+            </svg>
+          </button>
+        </div>
+
+        <!-- Appearance -->
+        <div class="settings-section-label">Appearance</div>
+        <div class="settings-row">
+          <span class="settings-row-label">Dark Mode</span>
+          <div class="theme-toggle" id="theme-toggle" role="switch" aria-checked="false" tabindex="0">
+            <div class="theme-toggle-thumb" id="theme-toggle-thumb"></div>
+          </div>
+        </div>
+
+        <div class="settings-divider"></div>
+
+        <!-- Tab Behavior -->
+        <div class="settings-section-label">Tab Behavior</div>
+        <div class="settings-row">
+          <div class="settings-row-text">
+            <span class="settings-row-label">Use Tab Groups</span>
+            <span class="settings-row-hint">Group tabs together when opening a group</span>
+          </div>
+          <div class="theme-toggle" id="toggle-tab-group" role="switch" aria-checked="true" tabindex="0">
+            <div class="theme-toggle-thumb"></div>
+          </div>
+        </div>
+        <div class="settings-row">
+          <div class="settings-row-text">
+            <span class="settings-row-label">Detect Duplicate Tabs</span>
+            <span class="settings-row-hint">Reuse open tabs instead of opening duplicates</span>
+          </div>
+          <div class="theme-toggle" id="toggle-dedup" role="switch" aria-checked="true" tabindex="0">
+            <div class="theme-toggle-thumb"></div>
+          </div>
+        </div>
+
+        <div class="settings-divider"></div>
+
+        <!-- Shortcuts -->
+        <div class="settings-section-label">Shortcuts</div>
+        <div class="settings-row">
+          <div class="settings-row-text">
+            <span class="settings-row-label">Command Palette</span>
+            <span class="settings-row-hint">Search & launch from popup</span>
+          </div>
+          <kbd class="settings-kbd">Ctrl+K</kbd>
+        </div>
+        <div class="settings-row">
+          <div class="settings-row-text">
+            <span class="settings-row-label">Omnibar Search</span>
+            <span class="settings-row-hint">Type in Chrome address bar</span>
+          </div>
+          <kbd class="settings-kbd">ts + Tab</kbd>
+        </div>
+
+        <div class="settings-divider"></div>
+
+        <!-- Data -->
+        <div class="settings-section-label">Data</div>
+        <div class="settings-actions settings-actions--single">
+          <button class="settings-action-btn settings-action-btn--danger settings-action-btn--full" id="btn-reset-data">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="3 6 5 6 21 6"/>
+              <path d="M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2"/>
+            </svg>
+            Reset All Data
+          </button>
+        </div>
+
+        <div class="settings-confirm" id="reset-confirm" style="display:none">
+          <span class="settings-confirm-text">Delete all groups? This can't be undone.</span>
+          <div class="settings-confirm-actions">
+            <button class="settings-confirm-btn" id="btn-reset-cancel">Cancel</button>
+            <button class="settings-confirm-btn settings-confirm-btn--danger" id="btn-reset-confirm">Delete Everything</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <script src="popup.js"></script>
+</body>
+</html>
